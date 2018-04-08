@@ -16,6 +16,7 @@ protocol BarcodeScannerDelegate: class {
 
 class BarcodeScanner: UIViewController {
   
+  // Add your own button in case you need extra light to scan a barcode
   @IBOutlet weak var torchButton: UIButton!
   
   private var requests = [VNRequest]()
@@ -34,18 +35,16 @@ class BarcodeScanner: UIViewController {
                                           qos: .userInteractive,
                                           attributes: .concurrent)
   
-
   weak var delegate: BarcodeScannerDelegate?
   
   private var detectedString: String? {
     didSet {
       if let barcode = detectedString {
-        print("detectedBarcode:", barcode)
         DispatchQueue.main.async {
           self.delegate?.detectedString(barcode)
+          // Depending upon your config, you could do a vanilla
           self.navigationController?.popToRootViewController(animated: true)
         }
-        
       }
     }
   }
@@ -145,14 +144,12 @@ class BarcodeScanner: UIViewController {
   }
   
   private func reportResults(results: [Any]?) {
-    // Loop through the found results
-    //    print("Barcode observation")
     
     guard let results = results else {
       return print("No results found.")
     }
     
-    //    print("Number of results found: \(results.count)")
+    //    print("Results found: \(results.count)")
     
     for result in results {
       
