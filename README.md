@@ -14,3 +14,5 @@ To instantiate `BarcodeScannner`, you could call something like this from `YourV
 When BarcodeScanner's finds a barcode, it sets `detectedString: String`, which fires a delegate method to pass the value to the delegate ViewController and dismiss the scannner...from there, do what you please.
 
 In `BarcodeScanner's setupVision` method, you can configure the barcodes it will detect.
+
+There is also a method that can turn on the iPhone's torch to illuminate dark barcodes. There's an IBOutlet on the VC that you should wire up to a storyboard if you're going to use that functionality.
